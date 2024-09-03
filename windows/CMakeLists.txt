@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(flutter_application_hello_world LANGUAGES CXX)
+project(flutter_application_todolist LANGUAGES CXX)
 
-set(BINARY_NAME "flutter_application_hello_world")
+set(BINARY_NAME "flutter_application_todolist")
 
 cmake_policy(SET CMP0063 NEW)
 
