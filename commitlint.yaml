@@ -5,7 +5,41 @@ rules:
   type-case:
    - 2
    - always
-   - 'upper-case'
+   - 'lower-case'
+  type-empty:
+    - 2
+    - never
+  type-enum:
+    - 2
+    - always
+    - - build
+      - chore
+      - ci
+      - docs
+      - feat
+      - fix
+      - perf
+      - refactor
+      - revert
+      - style
+      - test
+
+# build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+# chore: Tasks or work that are necessary to maintain and improve the quality of the project, but are not directly related to feature development or bug fixes.
+# ci: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
+# docs: Documentation only changes
+# feat: A new feature
+# fix: A bug fix
+# perf: A code change that improves performance
+# refactor: A code change that neither fixes a bug nor adds a feature
+# style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+# test: Adding missing tests or correcting existing tests
+  scope-enum:
+    - 2
+    - always
+    - - ci
+      - deps
+      - release
 
 # whether commitlint uses the default ignore rules.
 defaultIgnores: true
