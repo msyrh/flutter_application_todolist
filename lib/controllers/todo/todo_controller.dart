@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_todolist/models/todo/todo.dart';
 import 'package:get/get.dart';
@@ -19,7 +22,7 @@ class TodoController extends GetxController {
     try {
       Hive.registerAdapter(TodoAdapter());
     } catch (error) {
-      print(error);
+      printError(info: "onInit : $error");
     }
     getTodos();
     super.onInit();
@@ -39,7 +42,7 @@ class TodoController extends GetxController {
       box = Hive.box('db');
     } catch (error) {
       box = await Hive.openBox('db');
-      print(error);
+      printError(info: "getTodos: $error");
     }
 
     var tds = box.get('todos');
@@ -58,7 +61,7 @@ class TodoController extends GetxController {
     try {
       Hive.deleteBoxFromDisk('db');
     } catch (error) {
-      print(error);
+      printError(info: "clearTodos: $error");
     }
 
     todos.value = [];
@@ -82,6 +85,19 @@ class TodoController extends GetxController {
       remaining.add(editTodo);
     }
     todos[index] = editTodo;
+    var box = await Hive.openBox('db');
+    box.put('todos', todos.toList());
+  }
+
+  updateTodo(Todo todo) async {
+    var index = todos.indexWhere((td) => td.id == todo.id);
+    var editTodo = todos[index];
+
+    remaining.remove(editTodo);
+    remaining.add(todo);
+
+    todos[index] = todo;
+    
     var box = await Hive.openBox('db');
     box.put('todos', todos.toList());
   }

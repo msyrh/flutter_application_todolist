@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../models/todo/todo.dart';
 import 'add_todo_screen.dart';
+import 'edit_todo_screen.dart';
 
 class MyTodoScreen extends StatelessWidget {
   final controller = Get.put(TodoController());
@@ -121,6 +122,9 @@ class MyTodoScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               Todo todo = controller.remaining[index];
               return GestureDetector(
+                onTap: () {
+                  Get.to(() => EditTodoScreen(todo: todo));
+                },
                 onLongPress: () {
                   controller.toggleTodo(todo);
                 },
@@ -169,21 +173,22 @@ class TodoCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Expanded(
-                child: Row(
-              children: [
-                Icon(
-                  Icons.task_alt,
-                  color: isDone ? Colors.green : Colors.grey,
-                ),
-                const SizedBox(
-                  width: 3,
-                ),
-                Text(
-                  title,
-                  style: const TextStyle(fontSize: 18),
-                )
-              ],
-            ))
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.task_alt,
+                    color: isDone ? Colors.green : Colors.grey,
+                  ),
+                  const SizedBox(
+                    width: 3,
+                  ),
+                  Text(
+                    title,
+                    style: const TextStyle(fontSize: 18),
+                  )
+                ],
+              ),
+            )
           ],
         ));
   }
