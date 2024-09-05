@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_todolist/models/todo/todo.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:hive/hive.dart';
 
 class TodoController extends GetxController {
@@ -17,9 +16,10 @@ class TodoController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-    Hive.registerAdapter(TodoAdapter());
-    try {} catch (e) {
-      print(e);
+    try {
+      Hive.registerAdapter(TodoAdapter());
+    } catch (error) {
+      print(error);
     }
     getTodos();
     super.onInit();
@@ -70,7 +70,7 @@ class TodoController extends GetxController {
     box.put('todos', todos.toList());
   }
 
-  toggelTodo(Todo todo) async {
+  toggleTodo(Todo todo) async {
     var index = todos.indexOf(todo);
     var editTodo = todos[index];
     editTodo.isDone = !editTodo.isDone;
