@@ -12,7 +12,7 @@ class TodoScreen extends StatelessWidget {
     var todo = Todo(
         title: controller.titleController.text,
         description: controller.descriptionController.text,
-        cdt: DateTime.now(),
+        cdt: DateTime.now().toUtc(),
         id: UniqueKey().toString());
     controller.titleController.text = "";
     controller.descriptionController.text = "";

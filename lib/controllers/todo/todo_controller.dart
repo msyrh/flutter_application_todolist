@@ -77,6 +77,7 @@ class TodoController extends GetxController {
     var index = todos.indexOf(todo);
     var editTodo = todos[index];
     editTodo.isDone = !editTodo.isDone;
+    editTodo.udt = DateTime.now().toUtc();
     if (editTodo.isDone) {
       done.add(editTodo);
       remaining.remove(editTodo);
@@ -97,7 +98,7 @@ class TodoController extends GetxController {
     remaining.add(todo);
 
     todos[index] = todo;
-    
+
     var box = await Hive.openBox('db');
     box.put('todos', todos.toList());
   }

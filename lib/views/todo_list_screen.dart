@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_todolist/controllers/todo/todo_controller.dart';
 import 'package:flutter_application_todolist/views/view_todo_screen.dart';
 import 'package:get/get.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import '../models/todo/todo.dart';
 import 'add_todo_screen.dart';
@@ -106,6 +107,7 @@ class MyTodoScreen extends StatelessWidget {
                 isDone: todo.isDone,
                 title: todo.title,
                 date: todo.cdt,
+                dateCompleted: todo.udt,
               ),
             );
           },
@@ -132,6 +134,7 @@ class MyTodoScreen extends StatelessWidget {
                   isDone: todo.isDone,
                   title: todo.title,
                   date: todo.cdt,
+                  dateCompleted: todo.udt,
                 ),
               );
             }),
@@ -146,50 +149,74 @@ class TodoCard extends StatelessWidget {
     required this.title,
     required this.date,
     required this.isDone,
+    this.dateCompleted,
   }) : super(key: key);
 
   final String title;
   final DateTime date;
   final bool isDone;
+  final DateTime? dateCompleted;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        margin: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-        height: 100,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey[300]!,
-              blurRadius: 20,
-              spreadRadius: 1,
-            )
-          ],
-          color: isDone ? Colors.green[50] : Colors.white,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.task_alt,
-                    color: isDone ? Colors.green : Colors.grey,
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+      height: 100,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey[300]!,
+            blurRadius: 20,
+            spreadRadius: 1,
+          )
+        ],
+        color: isDone ? Colors.green[50] : Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Flexible(
+            child: Row(
+              children: [
+                Icon(
+                  Icons.task_alt,
+                  color: isDone ? Colors.green : Colors.grey,
+                ),
+                const SizedBox(width: 10),
+                Flexible(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        "created: ${timeago.format(date.toLocal())}",
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        "completed: ${dateCompleted == null ? 'not yet' : timeago.format(dateCompleted!.toLocal())}",
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    width: 3,
-                  ),
-                  Text(
-                    title,
-                    style: const TextStyle(fontSize: 18),
-                  )
-                ],
-              ),
-            )
-          ],
-        ));
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
