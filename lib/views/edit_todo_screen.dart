@@ -44,6 +44,10 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
     Get.back();
   }
 
+  void deleteTodo() async {
+    await controller.deleteTodo(widget.todo).then((value) => Get.back());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,6 +103,13 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
             title: "Submit",
             icon: Icons.done,
             onPressed: updateTodo,
+          ),
+          const SizedBox(height: 10),
+          CustomButton(
+            title: "Delete",
+            icon: Icons.delete,
+            onPressed: deleteTodo,
+            color: Colors.red[300],
           ),
           const SizedBox(
             height: 10,

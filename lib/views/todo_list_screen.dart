@@ -144,7 +144,7 @@ class MyTodoScreen extends StatelessWidget {
 }
 
 class TodoCard extends StatelessWidget {
-  const TodoCard({
+  TodoCard({
     Key? key,
     required this.title,
     required this.date,
@@ -156,6 +156,8 @@ class TodoCard extends StatelessWidget {
   final DateTime date;
   final bool isDone;
   final DateTime? dateCompleted;
+
+  final TodoController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -212,6 +214,7 @@ class TodoCard extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(width: 10),
               ],
             ),
           ),

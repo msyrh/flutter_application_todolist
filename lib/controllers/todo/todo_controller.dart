@@ -67,10 +67,18 @@ class TodoController extends GetxController {
     todos.value = [];
   }
 
-  deleteTodo(Todo todo) async {
+  Future deleteTodo(Todo todo) async {
+    var index = todos.indexOf(todo);
+    if (index <= 0 ) return;
+    print("delete ${todo.title}");
+
     todos.remove(todo);
+    remaining.remove(todo);
+    // done.remove(todo);
+
     var box = await Hive.openBox('db');
     box.put('todos', todos.toList());
+    return;
   }
 
   toggleTodo(Todo todo) async {
